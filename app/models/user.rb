@@ -4,10 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :validatable
 
+  has_many :sent_friend_requests, foreign_key: 'sender_id', class_name: 'FriendRequest'
+  has_many :received_friend_requests, foreign_key: 'receiver_id', class_name: 'FriendRequest'
+
   validates :phone_number, uniqueness: true, unless: -> { phone_number.blank? }
 
+  #logic to allow for sign-in via phone OR email
   attr_writer :login
-
 
   def login
     @login || phone_number || email
