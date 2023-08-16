@@ -1,2 +1,6 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<% unless @visible_user == current_user %>
+  <%= form_with model: [@visible_user, @visible_user.received_friend_requests.build] do |f| %>
+    <%= f.hidden_field :receiver_id, value: @visible_user.id %>
+    <%= f.submit 'Send friend request' %>
+  <% end %>
+<%end%>

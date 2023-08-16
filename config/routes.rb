@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  get 'users/show'
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "posts#index"
   root 'users#show'
+
+  resources :users, only: :show do
+    resources :friend_requests, only: :create
+  end
 end
