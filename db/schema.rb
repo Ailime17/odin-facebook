@@ -10,17 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_16_104338) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_17_132448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "friend_request_statuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "friend_requests", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "sender_id"
     t.bigint "receiver_id"
+    t.bigint "status_id", default: 1, null: false
     t.index ["receiver_id"], name: "index_friend_requests_on_receiver_id"
     t.index ["sender_id"], name: "index_friend_requests_on_sender_id"
+    t.index ["status_id"], name: "index_friend_requests_on_status_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,4 +45,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_104338) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "friend_requests", "friend_request_statuses", column: "status_id"
 end
