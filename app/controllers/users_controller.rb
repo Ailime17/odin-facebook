@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
   def show
-    @visible_user = User.find(params[:id])
+    @user = params.key?(:id) ? User.find(params[:id]) : current_user
   end
 end

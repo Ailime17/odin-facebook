@@ -1,6 +1,15 @@
-<% unless @visible_user == current_user %>
-  <%= form_with model: [@visible_user, @visible_user.received_friend_requests.build] do |f| %>
-    <%= f.hidden_field :receiver_id, value: @visible_user.id %>
-    <%= f.submit 'Send friend request' %>
+<% unless @user == current_user %>
+  <% if @friend_request = current_user.the_sent_friend_request_to(@user) %>
+    <%= button_to 'Friend request sent', user_friend_request_path(@user, @friend_request), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Remove friend request?' } %>
+  <% elsif @friend_request = current_user.the_received_friend_request_from(@user) %>
+    <%= form_with model: [@user, @friend_request] do |f| %>
+      <%= f.submit 'Accept friend request' %>
+    <% end %>
+  <% elsif @friend_request = current_user.the_accepted_friend_request_with(@user) %>
+      <%= button_to 'Unfriend', user_friend_request_path(@user, @friend_request), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Remove friend?' } %>
+  <% else %>
+    <%= form_with model: [@user, @user.received_friend_requests.build] do |f| %>
+      <%= f.submit 'Add friend' %>
+    <% end %>
   <% end %>
 <%end%>

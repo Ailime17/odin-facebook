@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   root 'users#show'
 
   resources :users, only: :show do
-    resources :friend_requests, only: :create
+    resources :friend_requests, only: [:create, :update, :destroy]
   end
 end

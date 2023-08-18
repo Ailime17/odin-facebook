@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_17_132448) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_18_171721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "friend_request_statuses", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -23,8 +23,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_132448) do
   create_table "friend_requests", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "sender_id"
-    t.bigint "receiver_id"
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
     t.bigint "status_id", default: 1, null: false
     t.index ["receiver_id"], name: "index_friend_requests_on_receiver_id"
     t.index ["sender_id"], name: "index_friend_requests_on_sender_id"

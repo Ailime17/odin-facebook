@@ -1,13 +1,31 @@
 class FriendRequestsController < ApplicationController
   def create
-    @user = User.find(permitted_params[:receiver_id])
-    friend_request = @user.received_friend_requests.build
-    friend_request.sender = current_user
-    friend_request.save
-    redirect_back_or_to root_path
+    @user = User.find(params[:user_id])
+    if @user.received_friend_requests.create(sender: current_user)
+      redirect_back_or_to root_path, status: :see_other
+    else
+      flash[:error] = "Couldn't send friend request. Please try again"
+      redirect_back_or_to root_path, status: :unprocessable_entity
+    end
   end
 
-  def permitted_params
-    params.require(:friend_request).permit(:receiver_id)
+  def update
+    @friend_request = FriendRequest.find(params[:id])
+    if @friend_request.update(status_id: 2)
+      redirect_back_or_to root_path, status: :see_other
+    else
+      flash[:error] = "Couldn't accept friend request. Please try again"
+      redirect_back_or_to root_path, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @friend_request = FriendRequest.find(params[:id])
+    if @friend_request.destroy
+      redirect_back_or_to root_path, status: :see_other
+    else
+      flash[:error] = "Couldn't unfriend. Please try again"
+      redirect_back_or_to root_path, status: :unprocessable_entity
+    end
   end
 end
