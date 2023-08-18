@@ -20,16 +20,16 @@ class User < ApplicationRecord
     friends
   end
 
-  def friends_with?(user)
-    friends.include?(user)
+  def the_accepted_friend_request_with(user)
+    sent_friend_requests.where(receiver: user).or(received_friend_requests.where(sender: user)).accepted.first
   end
 
-  def sent_friend_request_to?(user)
-    sent_friend_requests.where(receiver: user).pending.exists?
+  def the_sent_friend_request_to(user)
+    sent_friend_requests.where(receiver: user).pending.first
   end
 
-  def received_friend_request_from?(user)
-    received_friend_requests.where(sender: user).pending.exists?
+  def the_received_friend_request_from(user)
+    received_friend_requests.where(sender: user).pending.first
   end
 
   #logic to allow for sign-in via phone OR email
