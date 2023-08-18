@@ -9,6 +9,29 @@ class User < ApplicationRecord
 
   validates :phone_number, uniqueness: true, unless: -> { phone_number.blank? }
 
+  def friends
+    friends = []
+    sent_friend_requests.accepted.includes(:receiver).each do |request|
+      friends << request.receiver
+    end
+    received_friend_requests.accepted.includes(:sender).each do |request|
+      friends << request.sender
+    end
+    friends
+  end
+
+  def friends_with?(user)
+    friends.include?(user)
+  end
+
+  def sent_friend_request_to?(user)
+    sent_friend_requests.where(receiver: user).pending.exists?
+  end
+
+  def received_friend_request_from?(user)
+    received_friend_requests.where(sender: user).pending.exists?
+  end
+
   #logic to allow for sign-in via phone OR email
   attr_writer :login
 
