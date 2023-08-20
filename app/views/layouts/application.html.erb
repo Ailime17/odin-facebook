@@ -13,11 +13,25 @@
   <body>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <div id="navbar">
-      <% if user_signed_in? %>
-        <%= link_to 'Log out', destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
-      <% end %>
-    </div>
+    <% if user_signed_in? %>
+      <div id="navbar">
+        <div id="log_out">
+            <%= link_to 'Log out', destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
+        </div>
+        <div id="notifications">
+          <ul>
+            <% current_user.received_friend_requests.pending.includes(:sender).order(created_at: :desc).each do |request| %>
+              <li>
+                <div><%= request.sender.email%>  wants to be your friend!</div>
+                <%= form_with model: [@user, request] do |f| %>
+                  <%= f.submit 'Accept' %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
