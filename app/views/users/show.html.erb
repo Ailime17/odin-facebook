@@ -1,4 +1,14 @@
-<% unless @user == current_user %>
+<% if @user == current_user %>
+
+  <%# new post form %>
+  <%= render 'posts/form', user: @user %>
+
+  <%# all posts of user %>
+  <%= render 'posts/all_posts_of_user', user: @user, delete_rights: true %>
+
+<% else %>
+
+  <%# friend request button %>
   <% if @friend_request = current_user.the_sent_friend_request_to(@user) %>
     <%= button_to 'Friend request sent', user_friend_request_path(@user, @friend_request), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Remove friend request?' } %>
   <% elsif @friend_request = current_user.the_received_friend_request_from(@user) %>
@@ -12,4 +22,9 @@
       <%= f.submit 'Add friend' %>
     <% end %>
   <% end %>
+
+  <%# all posts of user %>
+  <%= render 'posts/all_posts_of_user', user: @user, delete_rights: false %>
+
 <%end%>
+
