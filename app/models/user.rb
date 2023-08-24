@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :sent_friend_requests, foreign_key: 'sender_id', class_name: 'FriendRequest'
   has_many :received_friend_requests, foreign_key: 'receiver_id', class_name: 'FriendRequest'
   has_many :posts
+  has_many :likes
+  has_many :liked_posts, through: :likes, source: :post
 
   validates :phone_number, uniqueness: true, unless: -> { phone_number.blank? }
 

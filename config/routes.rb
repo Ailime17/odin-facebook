@@ -8,4 +8,6 @@ Rails.application.routes.draw do
     resources :posts, only: [:create]
   end
   resources :posts, only: [:destroy]
+  resources :likes, only: [:create]
+  delete 'likes/', to: 'likes#destroy'
 end

@@ -6,6 +6,14 @@
       <% end %>
       <%= user.email %>
       <%= post.body %>
+      <div id="like-button">
+        <% if post.liking_users.exists?(current_user.id) %>
+          <%= button_to 'Unlike', likes_path(:post_id => post.id), method: :delete, data: { turbo_method: :delete } %>
+        <% else %>
+          <%= button_to 'Like', likes_path(:post_id => post.id), data: { turbo_method: 'post' } %>
+        <% end %>
+        <div id="like-count"><%= post.liking_users.size if post.liking_users.size > 0 %></div>
+      </div>
     </li>
   <% end %>
 </ul>
