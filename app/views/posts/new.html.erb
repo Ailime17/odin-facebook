@@ -1,0 +1,7 @@
+<%= turbo_frame_tag 'new_post' do %>
+  <%= form_with model: [current_user, current_user.posts.build] do |f| %>
+    <%= f.label :body, 'Create new post' %>
+    <%= f.text_area :body, placeholder: "What's on your mind, #{current_user.email}?" %>
+    <%= f.submit 'Share' %>
+  <% end %>
+<% end %>

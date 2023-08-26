@@ -1,10 +1,7 @@
 <% if @user == current_user %>
 
   <%# new post form %>
-  <%= render 'posts/form', user: @user %>
-
-  <%# all posts of user %>
-  <%= render 'posts/all_posts_of_user', user: @user, delete_rights: true %>
+  <%= turbo_frame_tag id='new_post', src: new_user_post_path(@user) %>
 
 <% else %>
 
@@ -23,8 +20,8 @@
     <% end %>
   <% end %>
 
-  <%# all posts of user %>
-  <%= render 'posts/all_posts_of_user', user: @user, delete_rights: false %>
-
 <%end%>
+
+<%# all posts of user %>
+<%= render 'posts/all_posts_of_user' %>
 

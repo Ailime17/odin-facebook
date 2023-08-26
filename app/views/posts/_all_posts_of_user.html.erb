@@ -1,19 +1,7 @@
-<ul>
-  <% user.posts.all.order(:created_at => :desc).each do |post| %>
-    <li>
-      <% if delete_rights %>
-        <%= link_to 'Delete post', post_path(:id => post.id), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this post?' } %>
-      <% end %>
-      <%= user.email %>
-      <%= post.body %>
-      <div id="like-button">
-        <% if post.liking_users.exists?(current_user.id) %>
-          <%= button_to 'Unlike', likes_path(:post_id => post.id), method: :delete, data: { turbo_method: :delete } %>
-        <% else %>
-          <%= button_to 'Like', likes_path(:post_id => post.id), data: { turbo_method: 'post' } %>
-        <% end %>
-        <div id="like-count"><%= post.liking_users.size if post.liking_users.size > 0 %></div>
-      </div>
-    </li>
+<div id="user-posts">
+  <% @user_posts.each do |post| %>
+    <%= turbo_frame_tag post, src: post_path(post), loading: 'lazy' do %>
+      <div class='loading-icon'></div>
+    <% end %>
   <% end %>
-</ul>
+</div>

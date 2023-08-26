@@ -1,5 +1,0 @@
-<%= form_with model: [user, user.posts.build] do |f| %>
-  <%= f.label :body, 'Create new post' %>
-  <%= f.text_area :body, placeholder: "What's on your mind, #{user.email}?" %>
-  <%= f.submit 'Share' %>
-<% end %>
