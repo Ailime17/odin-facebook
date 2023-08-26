@@ -5,9 +5,12 @@ Rails.application.routes.draw do
 
   resources :users, only: :show do
     resources :friend_requests, only: [:create, :update, :destroy]
-    resources :posts, only: [:create]
+    resources :posts, only: [:new, :create]
   end
-  resources :posts, only: [:destroy]
-  resources :likes, only: [:create]
-  delete 'likes/', to: 'likes#destroy'
+  resources :posts, only: [:destroy, :show] do
+    resources :likes, only: [:create]
+    resources :comments, only: [:create]
+  end
+  resources :likes, only: [:destroy]
+  resources :comments, only: [:destroy]
 end
