@@ -23,7 +23,7 @@
             <% current_user.received_friend_requests.pending.includes(:sender).order(created_at: :desc).each do |request| %>
               <li>
                 <div><%= request.sender.email%>  wants to be your friend!</div>
-                <%= form_with model: [@user, request] do |f| %>
+                <%= form_with model: request do |f| %>
                   <%= f.submit 'Accept' %>
                 <% end %>
               </li>
