@@ -4,8 +4,12 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
+one:
+  sender: one (User)
+  receiver: two (User)
+  status: one
 #
-two: {}
-# column: value
+two:
+  sender: one (User)
+  receiver: three (User)
+  status: one
