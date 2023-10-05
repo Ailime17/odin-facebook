@@ -6,19 +6,21 @@
 <% else %>
 
   <%# friend request button %>
-  <% if @friend_request = current_user.the_sent_friend_request_to(@user) %>
-    <%= button_to 'Friend request sent', friend_request_path(@friend_request), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Remove friend request?' } %>
-  <% elsif @friend_request = current_user.the_received_friend_request_from(@user) %>
-    <%= form_with model: @friend_request do |f| %>
-      <%= f.submit 'Accept friend request' %>
+  <div class="friend-request-btn">
+    <% if @friend_request = current_user.the_sent_friend_request_to(@user) %>
+      <%= button_to 'Friend request sent', friend_request_path(@friend_request), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Remove friend request?' } %>
+    <% elsif @friend_request = current_user.the_received_friend_request_from(@user) %>
+      <%= form_with model: @friend_request do |f| %>
+        <%= f.submit 'Accept friend request' %>
+      <% end %>
+    <% elsif @friend_request = current_user.the_accepted_friend_request_with(@user) %>
+        <%= button_to 'Unfriend', friend_request_path(@friend_request), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Remove friend?' } %>
+    <% else %>
+      <%= form_with model: [@user, @user.received_friend_requests.build] do |f| %>
+        <%= f.submit 'Add friend' %>
+      <% end %>
     <% end %>
-  <% elsif @friend_request = current_user.the_accepted_friend_request_with(@user) %>
-      <%= button_to 'Unfriend', friend_request_path(@friend_request), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Remove friend?' } %>
-  <% else %>
-    <%= form_with model: [@user, @user.received_friend_requests.build] do |f| %>
-      <%= f.submit 'Add friend' %>
-    <% end %>
-  <% end %>
+  </div>
 
 <%end%>
 
