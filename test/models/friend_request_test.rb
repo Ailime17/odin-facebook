@@ -14,5 +14,7 @@ class FriendRequestTest < ActiveSupport::TestCase
   test 'Friend_Request-Friend_Request_Status association works properly' do
     @fr_req_status_one = friend_request_statuses(:one)
     assert @fr_req_one.status == @fr_req_status_one
+    #and a quick test for FriendRequestStatus model:
+    assert @fr_req_status_one.friend_requests.exists?(@fr_req_one.id)
   end
 end
