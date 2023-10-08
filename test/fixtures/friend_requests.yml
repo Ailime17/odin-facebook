@@ -5,11 +5,11 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
-  sender: one (User)
-  receiver: two (User)
+  sender: one
+  receiver: two
   status: one
 #
 two:
-  sender: one (User)
-  receiver: three (User)
+  sender: one
+  receiver: three
   status: one
