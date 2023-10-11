@@ -1,10 +1,14 @@
 <%= turbo_frame_tag @post do %>
   <div class="post">
+
     <% if @delete_rights %>
       <%= link_to 'Delete post', post_path(@post), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this post?' } %>
     <% end %>
+    
     <%= @post.user.email %>
     <%= @post.body %>
+
+
     <%# like button %>
     <div class="like-button">
       <% if @like %>
@@ -14,24 +18,16 @@
       <% end %>
       <div class="like-count"><%= @post.liking_users.size if @post.liking_users.size > 0 %></div>
     </div>
+
+
     <%# comments %>
-    <div class="new-comment">
-      <%= current_user.email %>
-      <%= form_with model: [@post, @post.comments.build] do |f| %>
-        <%= f.text_area :body, placeholder: 'Your comment here...' %>
-        <%= f.submit %>
-      <% end %>
-    </div>
-    <div class='comments'>
+    <%= turbo_frame_tag id="new_comment", src:new_post_comment_path(@post) %>
+
+    <div id="comments">
       <% @post.comments.all.order(created_at: :desc).each do |comment| %>
-        <div class="comment">
-          <%= comment.user.email %>
-          <%= comment.body %>
-          <% if comment.user == current_user %>
-            <%= link_to 'Delete', comment_path(comment, post_id: @post.id), method: :delete, data: { turbo_method: :delete } %>
-          <% end %>
-        </div>
+        <%= render partial: 'comments/comment', object: comment %>
       <% end %>
     </div>
+
   </div>
 <% end %>

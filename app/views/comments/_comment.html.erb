@@ -1,0 +1,9 @@
+<div id="<%= dom_id(comment) %>">
+  <div class="comment">
+    <%= comment.user.email %>
+    <%= comment.body %>
+    <% if comment.user == current_user %>
+      <%= link_to 'Delete', comment_path(comment, post_id: @post.id), method: :delete, data: { turbo_method: :delete } %>
+    <% end %>
+</div>
+</div>

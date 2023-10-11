@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "new_comment" do %>
+  <div class="new-comment">
+    <%= current_user.email %>
+    <%= form_with model: [@post, @post.comments.build] do |f| %>
+      <%= f.text_area :body, placeholder: 'Your comment here...' %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+<% end %>
