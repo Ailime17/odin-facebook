@@ -24,7 +24,7 @@
     <%= turbo_frame_tag id="new_comment", src:new_post_comment_path(@post) %>
 
     <div id="comments">
-      <% @post.comments.all.order(created_at: :desc).each do |comment| %>
+      <% @comments.each do |comment| %>
         <%= render partial: 'comments/comment', object: comment %>
       <% end %>
     </div>

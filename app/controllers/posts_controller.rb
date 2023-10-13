@@ -29,6 +29,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @like = Like.find_by(post: @post, user: current_user)
     @delete_rights = current_user.posts.exists?(@post.id)
+    @comments = @post.comments.all.where(user: current_user).order(created_at: :desc) + @post.comments.all.where.not(user: current_user).order(created_at: :desc)
   end
 
   private

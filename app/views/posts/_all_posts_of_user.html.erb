@@ -1,3 +1,5 @@
+<%# for users#show view %>
+
 <div id="user-posts">
   <% @user_posts.each do |post| %>
     <%= turbo_frame_tag post, src: post_path(post), loading: 'lazy' do %>

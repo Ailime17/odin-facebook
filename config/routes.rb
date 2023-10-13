@@ -5,13 +5,15 @@ Rails.application.routes.draw do
 
   resources :users, only: :show do
     resources :friend_requests, only: [:create]
-    constraints ConstraintForNewPost.new do
+    constraints TurboFrameConstraint.new do
       resources :posts, only: [:new, :create]
     end
   end
   resources :posts, only: [:destroy, :show] do
     resources :likes, only: [:create]
-    resources :comments, only: [:new, :create]
+    constraints TurboFrameConstraint.new do
+      resources :comments, only: [:new, :create]
+    end
   end
   resources :friend_requests, only: [:update, :destroy]
   resources :likes, only: [:destroy]
