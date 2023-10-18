@@ -1,0 +1,10 @@
+<div id="<%= dom_id(post, :likes) %>">
+  <div class="like-btn">
+    <% if like %>
+      <%= button_to 'Unlike', like_path(like, post_id: post.id), method: :delete, data: { turbo_method: :delete } %>
+    <% else %>
+      <%= button_to 'Like', post_likes_path(post), data: { turbo_method: 'post' } %>
+    <% end %>
+    <div class="like-count"><%= post.liking_users.size unless post.liking_users.empty? %></div>
+  </div>
+</div>

@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+.post {
+  border: 1px solid black;
+}
+
+.new-comment {
+  background-color: blanchedalmond;
+}

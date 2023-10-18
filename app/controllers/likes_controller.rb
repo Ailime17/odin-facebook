@@ -2,22 +2,24 @@
 class LikesController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
-    if @post.likes.create(user: current_user)
-      redirect_to post_path(@post), status: :see_other
-    else
-      flash[:error] = "Couldn't like post. Please try again"
-      redirect_to post_path(@post), status: :unprocessable_entity
+    respond_to do |f|
+      if (@like = @post.likes.create(user: current_user))
+        f.turbo_stream { render turbo_stream: turbo_stream.replace(helpers.dom_id(@post, :likes), partial: 'likes/likes', locals: { post: @post, like: @like }) }
+      else
+        f.html { redirect_to post_path(@post), status: :unprocessable_entity, alert: "Couldn't like post. Please try again" }
+      end
     end
   end
 
   def destroy
     @post = Post.find(params[:post_id])
     @like = Like.find(params[:id])
-    if @like.destroy
-      redirect_to post_path(@post), status: :see_other
-    else
-      flash[:error] = "Couldn't unlike. Please try again"
-      redirect_to post_path(@post), status: :unprocessable_entity
+    respond_to do |f|
+      if @like.destroy
+        f.turbo_stream { render turbo_stream: turbo_stream.replace(helpers.dom_id(@post, :likes), partial: 'likes/likes', locals: { post: @post, like: nil }) }
+      else
+        f.html { redirect_to post_path(@post), status: :unprocessable_entity, alert: "Couldn't unlike. Please try again" }
+      end
     end
   end
 end
