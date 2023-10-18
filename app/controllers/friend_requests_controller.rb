@@ -4,7 +4,7 @@ class FriendRequestsController < ApplicationController
     if @user.received_friend_requests.create(sender: current_user)
       redirect_back_or_to root_path, status: :see_other
     else
-      flash[:error] = "Couldn't send friend request. Please try again"
+      flash[:alert] = "Couldn't send friend request. Please try again"
       redirect_back_or_to root_path, status: :unprocessable_entity
     end
   end
@@ -14,7 +14,7 @@ class FriendRequestsController < ApplicationController
     if @friend_request.update(status_id: 2)
       redirect_back_or_to root_path, status: :see_other
     else
-      flash[:error] = "Couldn't accept friend request. Please try again"
+      flash[:alert] = "Couldn't accept friend request. Please try again"
       redirect_back_or_to root_path, status: :unprocessable_entity
     end
   end
@@ -24,7 +24,7 @@ class FriendRequestsController < ApplicationController
     if @friend_request.destroy
       redirect_back_or_to root_path, status: :see_other
     else
-      flash[:error] = "Couldn't unfriend. Please try again"
+      flash[:alert] = "Couldn't unfriend. Please try again"
       redirect_back_or_to root_path, status: :unprocessable_entity
     end
   end

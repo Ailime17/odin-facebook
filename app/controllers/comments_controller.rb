@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
       if @comment.save
         format.turbo_stream { render turbo_stream: turbo_stream.prepend('comments', @comment) }
       else
-        flash.now[:error] = "Couldn't create comment. Please try again"
+        flash.now[:alert] = "Couldn't create comment. Please try again"
         format.html { render :new, status: :unprocessable_entity }
       end
     end
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
       if @comment.destroy
         format.turbo_stream { render turbo_stream: turbo_stream.remove(@comment) }
       else
-        flash[:error] = "Couldn't delete comment. Please try again"
+        flash[:alert] = "Couldn't delete comment. Please try again"
         format.html { redirect_to post_path(@post), status: :unprocessable_entity }
       end
     end
