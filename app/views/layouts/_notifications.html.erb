@@ -1,0 +1,11 @@
+<ul>
+  <% current_user.received_friend_requests.pending.includes(:sender).order(created_at: :desc).each do |friend_request| %>
+    <li>
+        <%= turbo_frame_tag 'notif_friend_request' do %>
+
+          <%= render partial: 'layouts/notif_friend_request', locals: { friend_request: friend_request } %>
+
+        <%end%>
+    </li>
+  <% end %>
+</ul>

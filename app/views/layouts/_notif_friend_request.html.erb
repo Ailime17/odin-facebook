@@ -1,0 +1,8 @@
+<%= link_to friend_request.sender.email, user_path(friend_request.sender), data: { turbo_frame: "_top" } %>  wants to be your friend!
+
+<div class="friend-request-btn" id="<%= dom_id(friend_request) %>">
+
+  
+  <%= button_to 'Accept', user_friend_request_path(current_user, friend_request, category: 'notification'), method: :patch %>
+
+</div>

@@ -1,0 +1,19 @@
+<%= turbo_frame_tag 'friend_request' do %>
+
+  <div class="friend-request-btn">
+    <% if current_user.sent_friend_request_to?(@user) %>
+
+      <%= button_to 'Friend request sent', user_friend_request_path(@user, @friend_request), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Remove friend request?' } %>
+
+    <% elsif current_user.received_friend_request_from?(@user) %>
+
+      <%= button_to 'Accept friend request', user_friend_request_path(@user, @friend_request), method: :patch %>
+
+    <% else %>
+
+      <%= button_to 'Unfriend', user_friend_request_path(@user, @friend_request), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Remove friend?' } %>
+
+    <% end %>
+  </div>
+
+<%end%>

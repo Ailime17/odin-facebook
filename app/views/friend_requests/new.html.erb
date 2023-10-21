@@ -1,0 +1,7 @@
+<%= turbo_frame_tag 'friend_request' do %>
+
+  <%= form_with model: [@user, @user.received_friend_requests.build] do |f| %>
+    <%= f.submit 'Add friend' %>
+  <% end %>
+
+<%end%>
