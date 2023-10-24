@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 # controller for sending, accepting, and taking back sent or accepted friend requests
 class FriendRequestsController < ApplicationController
-
   def new
     @user = User.find(params[:user_id])
   end

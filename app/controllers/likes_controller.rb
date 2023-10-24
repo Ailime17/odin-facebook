@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # controller for liking and unliking posts
 class LikesController < ApplicationController
   def create

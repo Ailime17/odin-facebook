@@ -1,5 +1,7 @@
-class CommentsController < ApplicationController
+# frozen_string_literal: true
 
+# controller for creating and deleting comments for posts
+class CommentsController < ApplicationController
   def new
     @post = Post.find(params[:post_id])
   end
