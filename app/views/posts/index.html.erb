@@ -1,0 +1,4 @@
+
+<% @posts.each do |post| %>
+  <%= turbo_frame_tag post, src: post_path(post), loading: 'lazy' %>
+<% end %>

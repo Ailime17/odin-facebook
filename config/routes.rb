@@ -9,12 +9,14 @@ Rails.application.routes.draw do
       resources :posts, only: [:new, :create]
     end
   end
-  resources :posts, only: [:destroy, :show] do
+
+  resources :posts, only: [:destroy, :show, :index] do
     resources :likes, only: [:create]
     constraints TurboFrameConstraint.new do
       resources :comments, only: [:new, :create]
     end
   end
+
   resources :likes, only: [:destroy]
   resources :comments, only: [:destroy]
 end
