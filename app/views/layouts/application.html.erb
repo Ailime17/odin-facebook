@@ -15,11 +15,17 @@
     <p class="alert"><%= alert %></p>
     <% if user_signed_in? %>
       <div id="navbar">
-        <div id="log_out">
-            <%= link_to 'Log out', destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
+        <div id="home">
+          <%= link_to "Home", posts_path %>
+        </div>
+        <div id="profile">
+          <%= button_to 'Profile', user_path(current_user) %>
         </div>
         <div id="notifications">
           <%= render 'layouts/notifications' %>
+        </div>
+        <div id="log_out">
+            <%= link_to 'Log out', destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
         </div>
       </div>
     <% end %>

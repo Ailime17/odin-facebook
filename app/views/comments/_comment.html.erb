@@ -1,6 +1,6 @@
 <div id="<%= dom_id(comment) %>">
   <div class="comment">
-    <%= comment.user.email %>
+    <%= link_to comment.user.email, user_path(comment.user), data: { turbo_frame: "_top" } %>
     <%= comment.body %>
     <% if comment.user == current_user %>
       <%= link_to 'Delete', comment_path(comment, post_id: @post.id), method: :delete, data: { turbo_method: :delete } %>
