@@ -1,16 +1,45 @@
 <h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <% resource.build_profile %>
   <%= render "devise/shared/error_messages", resource: resource %>
+
+  <%= f.fields_for :profile do |p| %>
+    <div class="field">
+      <%= p.label :first_name %><br />
+      <%= p.text_field :first_name, autofocus: true %>
+    </div>
+    <div class="field">
+      <%= p.label :surname %><br />
+      <%= p.text_field :surname %>
+    </div>
+    <div class="field">
+      <%= p.label :birthday %><br />
+      <%= p.date_field :birthday %>
+    </div>
+    <div class="field">
+      <p>Gender:</p>
+      <ul>
+        <li>
+          <%= p.label :gender_male, 'Male' %><br />
+          <%= p.radio_button :gender, 'male' %>
+        </li>
+        <li>
+          <%= p.label :gender_female, 'Female' %><br />
+          <%= p.radio_button :gender, 'female' %>
+        </li>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autocomplete: "email" %>
   </div>
 
   <div class="field">
     <%= f.label :phone_number, 'Phone number (e.g. 123456789)' %><br />
-    <%= f.telephone_field :phone_number, autofocus: true, pattern: "[0-9]{3}[0-9]{3}[0-9]{3}" %>
+    <%= f.telephone_field :phone_number, pattern: "[0-9]{3}[0-9]{3}[0-9]{3}" %>
   </div>
 
   <div class="field">
