@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     constraints TurboFrameConstraint.new do
       resources :friend_requests, except: [:edit, :index]
       resources :posts, only: [:new, :create]
+      resource :profile, only: [:show, :edit, :update]
     end
   end
 

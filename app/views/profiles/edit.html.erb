@@ -1,0 +1,10 @@
+<%= turbo_frame_tag id='edit_profile_picture' do %>
+  <div class="upload_profile_pic_btn">
+    <%= form_with model: [@user, @profile] do |f| %>
+      <div>
+        <%= f.file_field :picture %>
+      </div>
+      <%= f.submit 'upload photo' %>
+    <% end %>
+  </div>
+<%end%>

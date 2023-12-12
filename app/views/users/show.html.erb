@@ -1,4 +1,11 @@
+<%# profile picture %>
+<%= turbo_frame_tag id='profile_picture', src: user_profile_path(@user) %>
+
+
 <% if @user == current_user %>
+
+  <%# upload profile picture form %>
+  <%= turbo_frame_tag id='edit_profile_picture', src: edit_user_profile_path(@user) %>
 
   <%# new post form %>
   <%= turbo_frame_tag id='new_post', src: new_user_post_path(@user) %>

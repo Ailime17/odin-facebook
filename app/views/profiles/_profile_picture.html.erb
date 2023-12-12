@@ -1,0 +1,5 @@
+<% if profile_picture %>
+  <%= image_tag profile_picture.variant(:standard) %>
+<% else %>
+    <div class="no_profile_picture"></div>
+<% end %>
